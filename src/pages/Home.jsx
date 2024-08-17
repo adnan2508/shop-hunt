@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categories] = useState([
+    "all", 
+    "men's clothing", 
+    "women's clothing", 
+    "jewelery", 
+    "electronics"
+]);
+  // const [categories, setCategories] = useState([]);
   // const [items, setItems] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -27,12 +34,12 @@ const Home = () => {
       .then((data) => {
         setProducts(data);
       })
-      .catch(error => console.error('Error fetching products:', error));
+      .catch((error) => console.error("Error fetching products:", error));
 
-      fetch('https://fakestoreapi.com/products/categories')
-            .then(res => res.json())
-            .then(json => setCategories(json))
-            .catch(error => console.error('Error fetching categories:', error));
+    // fetch("https://fakestoreapi.com/products/categories")
+    //   .then((res) => res.json())
+    //   .then((json) => setCategories(json))
+    //   .catch((error) => console.error("Error fetching categories:", error));
   }, []);
 
   // Search functionality
@@ -41,34 +48,40 @@ const Home = () => {
   };
 
   // filtering categories
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
+  // const handleCategoryChange = (event) => {
+  //   setSelectedCategory(event.target.value);
+  // };
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
 };
 
   // Sorting functionality
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
-};
+  };
 
-const sortProducts = (products) => {
+  const sortProducts = (products) => {
     switch (sortOption) {
-        case "Price(Low to High)":
-            return products.sort((a, b) => a.price - b.price);
-        case "Price(High to Low)":
-            return products.sort((a, b) => b.price - a.price);
-        case "Alphabetically(A-Z)":
-            return products.sort((a, b) => a.title.localeCompare(b.title));
-        case "Alphabetically(Z-A)":
-            return products.sort((a, b) => b.title.localeCompare(a.title));
-        default:
-            return products;
+      case "Price(Low to High)":
+        return products.sort((a, b) => a.price - b.price);
+      case "Price(High to Low)":
+        return products.sort((a, b) => b.price - a.price);
+      case "Alphabetically(A-Z)":
+        return products.sort((a, b) => a.title.localeCompare(b.title));
+      case "Alphabetically(Z-A)":
+        return products.sort((a, b) => b.title.localeCompare(a.title));
+      default:
+        return products;
     }
-}; 
+  };
 
-  const filterProducts = products.filter((product) =>{
-    return (selectedCategory === "all" || product.category === selectedCategory) && product.title.toLowerCase().includes(search.toLowerCase());
-  }
-  );
+  const filterProducts = products.filter((product) => {
+    return (
+      (selectedCategory === "all" || product.category === selectedCategory) &&
+      product.title.toLowerCase().includes(search.toLowerCase())
+    );
+  });
 
   const sortedProducts = sortProducts(filterProducts);
 
@@ -86,24 +99,12 @@ const sortProducts = (products) => {
           onChange={handleSearchChange}
         />
 
-        {/* Filtering categories */}
-        <select
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-          className="ml-4 p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500"
-        >
-          <option value="all">All Categories</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-            </option>
-          ))}
-        </select>
-
         {/* Sort box */}
-        <select value={sortOption}
-                onChange={handleSortChange} 
-                className="select select-secondary max-w-xs">
+        <select
+          value={sortOption}
+          onChange={handleSortChange}
+          className="select select-secondary max-w-xs"
+        >
           <option disabled selected>
             Sort By
           </option>
@@ -117,36 +118,17 @@ const sortProducts = (products) => {
       {/* Filter buttons */}
       <div className="w-11/12 mx-auto flex gap-3">
         <div className="flex flex-col lg:flex-row gap-2">
-          <button
-            className="btn btn-secondary"
-            onClick={() => setItems(products)}
-          >
-            All Products
-          </button>
-          <button
-            className="btn btn-secondary"
-            onClick={() => filterItems("men's clothing")}
-          >
-            men's clothing
-          </button>
-          <button
-            className="btn btn-secondary"
-            onClick={() => filterItems("women' clothing")}
-          >
-            women's clothing
-          </button>
-          <button
-            className="btn btn-secondary"
-            onClick={() => filterItems("jewelery")}
-          >
-            jewelery
-          </button>
-          <button
-            className="btn btn-secondary"
-            onClick={() => filterItems("electronics")}
-          >
-            electronics
-          </button>
+          {categories.map((category) => (
+            <button
+              key={category}
+              className={`btn btn-secondary ${
+                selectedCategory === category ? "bg-blue-500 text-white" : ""
+              }`}
+              onClick={() => handleCategoryChange(category)}
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </button>
+          ))}
         </div>
       </div>
 
