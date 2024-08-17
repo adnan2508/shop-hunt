@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import 'animate.css';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -10,7 +11,6 @@ const Home = () => {
     "electronics"
 ]);
   // const [categories, setCategories] = useState([]);
-  // const [items, setItems] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOption, setSortOption] = useState("");
@@ -138,7 +138,7 @@ const Home = () => {
         {sortedProducts.map((product) => (
           <div
             key={product.id}
-            className="block border border-black-700 rounded-lg p-4 shadow-lg shadow-indigo-100"
+            className="hover:scale-105 duration-500 block border border-black-700 rounded-lg p-4 shadow-lg shadow-indigo-100"
           >
             <img
               alt=""
