@@ -105,13 +105,13 @@ const Home = () => {
           onChange={handleSortChange}
           className="select select-secondary max-w-xs"
         >
-          <option disabled selected>
+          <option value="" disabled selected>
             Sort By
           </option>
-          <option>Price(Low to High)</option>
-          <option>Price(High to Low)</option>
-          <option>Alphabetically(A-Z)</option>
-          <option>Alphabetically(Z-A)</option>
+          <option value="Price(Low to High)">Price(Low to High)</option>
+          <option value="Price(High to Low)">Price(High to Low)</option>
+          <option value="Alphabetically(A-Z)">Alphabetically(A-Z)</option>
+          <option value="Alphabetically(Z-A)">Alphabetically(Z-A)</option>
         </select>
       </div>
 
@@ -138,8 +138,7 @@ const Home = () => {
         {sortedProducts.map((product) => (
           <div
             key={product.id}
-            className="hover:scale-105 duration-500 block border border-black-700 rounded-lg p-4 shadow-lg shadow-indigo-100"
-          >
+            className="hover:scale-105 duration-500 block border border-black-700 rounded-lg p-4 shadow-lg shadow-indigo-100">
             <img
               alt=""
               src={product.image}
