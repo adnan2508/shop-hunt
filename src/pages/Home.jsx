@@ -11,25 +11,12 @@ const Home = () => {
     "jewelery",
     "electronics",
   ]);
-  // const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOption, setSortOption] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10;
 
-  // const fetchData = (search) => {
-  //   let url = `https://fakestoreapi.com/products`;
-
-  //   if (search !== '') {
-  //     url = `https://fakestoreapi.com/products/search?q=${search}`;
-  //   };
-  //   fetch(url)
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     console.log(data);
-  //   })
-  // }
 
   useEffect(() => {
     fetch(`https://fakestoreapi.com/products`)
@@ -38,22 +25,12 @@ const Home = () => {
         setProducts(data);
       })
       .catch((error) => console.error("Error fetching products:", error));
-
-    // fetch("https://fakestoreapi.com/products/categories")
-    //   .then((res) => res.json())
-    //   .then((json) => setCategories(json))
-    //   .catch((error) => console.error("Error fetching categories:", error));
   }, []);
 
   // Search functionality
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   };
-
-  // filtering categories
-  // const handleCategoryChange = (event) => {
-  //   setSelectedCategory(event.target.value);
-  // };
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
