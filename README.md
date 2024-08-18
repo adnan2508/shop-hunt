@@ -1,6 +1,6 @@
 # Shop Hunt
 
-# Live preview: 
+# Live preview: https://shopphunt.netlify.app/
 
 ## Introduction:
 Shop Hunt is an online store built using React, Tailwind CSS. This project aims to create a responsive user interface with various functionalities.
