@@ -14,7 +14,7 @@ Shop Hunt is an online store built using React, Tailwind CSS. This project aims 
 
 ## Project Setup:
 1. Clone this project repository: https://github.com/adnan2508/shop-hunt.git
-2. Change to the project directory: cd shop-hunt
+2. Change to the project directory: "cd shop-hunt"
 3. Install project dependencies: "npm install"
-4. Start the development server: npm start
+4. Start the development server: "npm start"
 5. Access the project at: http://localhost:5173
