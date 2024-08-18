@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "animate.css";
+import { FaStar } from "react-icons/fa6";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -178,14 +179,15 @@ const Home = () => {
               </dl>
 
               <div className="mt-6 flex justify-between items-center gap-8 text-xs">
-                  <div className="mt-1.5 sm:mt-0">
-                    <div className="badge badge-secondary">
-                      {product.category}
-                    </div>
+                <div className="mt-1.5 sm:mt-0">
+                  <div className="badge badge-secondary">
+                    {product.category}
                   </div>
-                  <div className="">
-                    <p className="text-base">{product.rating.rate}</p>
-                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <FaStar className="text-lg text-yellow-400"/>
+                  <p className="text-base">{product.rating.rate}</p>
+                </div>
               </div>
             </div>
           </div>
