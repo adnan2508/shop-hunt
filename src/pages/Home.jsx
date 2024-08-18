@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import 'animate.css';
+import "animate.css";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories] = useState([
-    "all", 
-    "men's clothing", 
-    "women's clothing", 
-    "jewelery", 
-    "electronics"
-]);
+    "all",
+    "men's clothing",
+    "women's clothing",
+    "jewelery",
+    "electronics",
+  ]);
   // const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -57,7 +57,7 @@ const Home = () => {
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setCurrentPage(1); // Reset to first page when category changes
-};
+  };
 
   // Sorting functionality
   const handleSortChange = (event) => {
@@ -74,6 +74,8 @@ const Home = () => {
         return products.sort((a, b) => a.title.localeCompare(b.title));
       case "Alphabetically(Z-A)":
         return products.sort((a, b) => b.title.localeCompare(a.title));
+      case "Rating":
+        return products.sort((a, b) => b.rating.rate - a.rating.rate);
       default:
         return products;
     }
@@ -91,15 +93,16 @@ const Home = () => {
   // Pagination logic
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = sortedProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
-      <h2 className="text-center mt-8">this is Home: {products.length}</h2>
-
-      <div className="w-11/12 mx-auto flex gap-2 md:gap-8 mb-8">
+      <div className="w-11/12 mx-auto flex gap-2 md:gap-8 my-8">
         {/* Search box */}
         <input
           type="text"
@@ -122,6 +125,7 @@ const Home = () => {
           <option value="Price(High to Low)">Price(High to Low)</option>
           <option value="Alphabetically(A-Z)">Alphabetically(A-Z)</option>
           <option value="Alphabetically(Z-A)">Alphabetically(Z-A)</option>
+          <option value="Rating">Rating</option>
         </select>
       </div>
 
@@ -148,11 +152,12 @@ const Home = () => {
         {currentProducts.map((product) => (
           <div
             key={product.id}
-            className="block border border-black-700 rounded-lg p-4 shadow-lg shadow-indigo-100">
+            className="block border border-black-700 rounded-lg p-4 shadow-lg shadow-indigo-100"
+          >
             <img
               alt=""
               src={product.image}
-              className="hover:scale-105 duration-500 h-60 w-56 rounded-lg mx-auto"
+              className="hover:scale-110 duration-500 h-60 w-56 rounded-lg mx-auto"
             />
 
             <div className="mt-2">
@@ -172,14 +177,15 @@ const Home = () => {
                 </p>
               </dl>
 
-              <div className="mt-6 flex items-center gap-8 text-xs">
-                <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
+              <div className="mt-6 flex justify-between items-center gap-8 text-xs">
                   <div className="mt-1.5 sm:mt-0">
                     <div className="badge badge-secondary">
                       {product.category}
                     </div>
                   </div>
-                </div>
+                  <div className="">
+                    <p className="text-base">{product.rating.rate}</p>
+                  </div>
               </div>
             </div>
           </div>
@@ -188,15 +194,20 @@ const Home = () => {
 
       {/* Pagination */}
       <div className="flex justify-center my-8">
-        {Array.from({ length: Math.ceil(products.length / productsPerPage) }, (_, index) => (
-          <button
-            key={index + 1}
-            onClick={() => paginate(index + 1)}
-            className={`btn ${currentPage === index + 1 ? "btn-primary" : "btn-secondary"} mx-1`}
-          >
-            {index + 1}
-          </button>
-        ))}
+        {Array.from(
+          { length: Math.ceil(products.length / productsPerPage) },
+          (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => paginate(index + 1)}
+              className={`btn ${
+                currentPage === index + 1 ? "btn-primary" : "btn-secondary"
+              } mx-1`}
+            >
+              {index + 1}
+            </button>
+          )
+        )}
       </div>
     </div>
   );
