@@ -14,6 +14,8 @@ const Home = () => {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortOption, setSortOption] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 10;
 
   // const fetchData = (search) => {
   //   let url = `https://fakestoreapi.com/products`;
@@ -54,6 +56,7 @@ const Home = () => {
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
+    setCurrentPage(1); // Reset to first page when category changes
 };
 
   // Sorting functionality
@@ -84,6 +87,13 @@ const Home = () => {
   });
 
   const sortedProducts = sortProducts(filterProducts);
+
+  // Pagination logic
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -135,25 +145,25 @@ const Home = () => {
       {/* Product card */}
       <div className="w-11/12 mx-auto my-8 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {/* Mapping through products */}
-        {sortedProducts.map((product) => (
+        {currentProducts.map((product) => (
           <div
             key={product.id}
-            className="hover:scale-105 duration-500 block border border-black-700 rounded-lg p-4 shadow-lg shadow-indigo-100">
+            className="block border border-black-700 rounded-lg p-4 shadow-lg shadow-indigo-100">
             <img
               alt=""
               src={product.image}
-              className="h-[500px] w-full rounded-md"
+              className="hover:scale-105 duration-500 h-60 w-56 rounded-lg mx-auto"
             />
 
             <div className="mt-2">
               <dl>
                 <div>
-                  <dd className="text-sm text-gray-500">${product.price}</dd>
+                  <dd className="text-lg text-gray-500">${product.price}</dd>
                 </div>
 
                 <div>
                   {/* <dt className="sr-only">Address</dt> */}
-                  <dd className="font-medium">{product.title}</dd>
+                  <dd className="font-bold text-xl">{product.title}</dd>
                 </div>
 
                 <p className="mt-2">
@@ -173,6 +183,19 @@ const Home = () => {
               </div>
             </div>
           </div>
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <div className="flex justify-center my-8">
+        {Array.from({ length: Math.ceil(products.length / productsPerPage) }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => paginate(index + 1)}
+            className={`btn ${currentPage === index + 1 ? "btn-primary" : "btn-secondary"} mx-1`}
+          >
+            {index + 1}
+          </button>
         ))}
       </div>
     </div>

@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+  );
+
+  const handleToggle = (e) => {
+    if(e.target.checked) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
+
+  useEffect(()=> {
+    localStorage.setItem("theme", theme);
+    const localTheme = localStorage.getItem("theme");
+    document.querySelector("html").setAttribute("data-theme", localTheme);
+  }, [theme]);
+  
   return (
     <div>
       <div className="navbar bg-secondary text-white">
@@ -15,7 +33,9 @@ const Navbar = () => {
           <div className="dropdown dropdown-end mr-8">
             <label className="swap swap-rotate">
               {/* this hidden checkbox controls the state */}
-              <input type="checkbox" />
+              <input type="checkbox" 
+              onChange={handleToggle} 
+              checked = {theme === "light" ? false:true}/>
 
               {/* sun icon */}
               <svg
