@@ -1,8 +1,20 @@
-# React + Vite
+# Shop Hunt
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Live preview: 
 
-Currently, two official plugins are available:
+## Introduction:
+Shop Hunt is an online store built using React, Tailwind CSS. This project aims to create a responsive user interface with various functionalities.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features:
+- Home page with product listing.
+- Searching functionality using product title.
+- Sorting and filtering functionality based on product price, categories, alphabetical order etc.
+- Pagination functionality to showcase a specific amount of product in a single page.
+- Theme toggling between dark and light mode.
+
+## Project Setup:
+1. Clone this project repository: https://github.com/adnan2508/shop-hunt.git
+2. Change to the project directory: "cd shop-hunt"
+3. Install project dependencies: "npm install"
+4. Start the development server: "npm run dev"
+5. Access the project at: http://localhost:5173
